@@ -21,7 +21,8 @@ public class ChessBoard {
 	}
 
 	public void Add(Pawn pawn, int xCoordinate, int yCoordinate, PieceColor pieceColor) {
-		if (piecesLimitNotReached() && IsLegalBoardPosition(xCoordinate, yCoordinate) && isNotAlreadyOccupied(xCoordinate, yCoordinate)) {
+		if (piecesLimitNotReached() && IsLegalMove(xCoordinate, yCoordinate)) {
+			pawn.setChessBoard(this);
 			pawn.setXCoordinate(xCoordinate);
 			pawn.setYCoordinate(yCoordinate);
 			pieces[xCoordinate][yCoordinate] = pawn;
@@ -31,6 +32,16 @@ public class ChessBoard {
 		}
 	}
 
+	public boolean IsLegalMove(int xCoordinate, int yCoordinate) {
+		return IsLegalBoardPosition(xCoordinate, yCoordinate) && isNotAlreadyOccupied(xCoordinate, yCoordinate);
+	}
+
+	public boolean IsLegalBoardPosition(int xCoordinate, int yCoordinate) {
+		OptionalLong checkXCoordinate = LongStream.range(0, MAX_BOARD_WIDTH).filter(p -> p == xCoordinate).findAny();
+		OptionalLong checkYCoordinate = LongStream.range(0, MAX_BOARD_HEIGHT).filter(p -> p == yCoordinate).findAny();
+		return checkXCoordinate.isPresent() && checkYCoordinate.isPresent();
+	}
+	
 	private boolean isNotAlreadyOccupied(int xCoordinate, int yCoordinate) {
 		return !isInTheBoard(pieces[xCoordinate][yCoordinate]);
 	}
@@ -43,6 +54,7 @@ public class ChessBoard {
 		return Arrays.stream(pieces).flatMap(Stream::of).filter(whereContainsPiece()).count() <= MAX_N_OF_PAWNS;
 	}
 
+	
 	private Predicate<? super Pawn> whereContainsPiece() {
 		return new Predicate<Pawn>() {
 			@Override
@@ -50,11 +62,5 @@ public class ChessBoard {
 				return isInTheBoard(t);
 			}
 		};
-	}
-
-	public boolean IsLegalBoardPosition(int xCoordinate, int yCoordinate) {
-		OptionalLong checkXCoordinate = LongStream.range(0, MAX_BOARD_WIDTH).filter(p -> p == xCoordinate).findAny();
-		OptionalLong checkYCoordinate = LongStream.range(0, MAX_BOARD_HEIGHT).filter(p -> p == yCoordinate).findAny();
-		return checkXCoordinate.isPresent() && checkYCoordinate.isPresent();
 	}
 }
