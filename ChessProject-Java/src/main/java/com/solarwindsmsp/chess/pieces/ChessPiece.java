@@ -56,6 +56,7 @@ public abstract class ChessPiece {
 			throw new UnsupportedOperationException("MovementType.CAPTURE is not implemented yet");
 		} else {
 			if (chessBoard.IsLegalMove(newX, newY) && this.IsLegalMove(newX, newY)) {
+				System.out.println("Moving "+this+" to "+newX+":"+newY);
 				this.setXCoordinate(newX);
 				this.setYCoordinate(newY);
 			}

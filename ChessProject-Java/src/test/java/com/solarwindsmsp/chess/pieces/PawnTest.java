@@ -51,6 +51,21 @@ public class PawnTest {
         assertEquals(6, testSubject.getXCoordinate());
         assertEquals(3, testSubject.getYCoordinate());
     }
+    
+    @Test
+    public void testPawn_Move_IllegalCoordinates_ObliqueLeft_DoesNotMove() {
+        chessBoard.Add(testSubject, 6, 3);
+        testSubject.Move(MovementType.MOVE, 5, 2);
+        assertEquals(6, testSubject.getXCoordinate());
+        assertEquals(3, testSubject.getYCoordinate());
+    }
+    @Test
+    public void testPawn_Move_IllegalCoordinates_ObliqueRight_DoesNotMove() {
+        chessBoard.Add(testSubject, 6, 3);
+        testSubject.Move(MovementType.MOVE, 5, 3);
+        assertEquals(6, testSubject.getXCoordinate());
+        assertEquals(3, testSubject.getYCoordinate());
+    }
 
     @Test
     public void testPawn_Move_LegalCoordinates_Forward_UpdatesCoordinates() {
