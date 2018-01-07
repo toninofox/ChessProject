@@ -21,7 +21,7 @@ public class ChessBoard {
 	}
 
 	public void Add(Pawn pawn, int xCoordinate, int yCoordinate, PieceColor pieceColor) {
-		if (piecesLimitNotReached() && IsLegalBoardPosition(xCoordinate, yCoordinate)) {
+		if (piecesLimitNotReached() && IsLegalBoardPosition(xCoordinate, yCoordinate) && isNotAlreadyOccupied(xCoordinate, yCoordinate)) {
 			pawn.setXCoordinate(xCoordinate);
 			pawn.setYCoordinate(yCoordinate);
 			pieces[xCoordinate][yCoordinate] = pawn;
@@ -29,6 +29,10 @@ public class ChessBoard {
 			pawn.setXCoordinate(INVALID_COORDINATE);
 			pawn.setYCoordinate(INVALID_COORDINATE);
 		}
+	}
+
+	private boolean isNotAlreadyOccupied(int xCoordinate, int yCoordinate) {
+		return pieces[xCoordinate][yCoordinate] == null;
 	}
 
 	private boolean piecesLimitNotReached() {
