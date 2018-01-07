@@ -32,7 +32,11 @@ public class ChessBoard {
 	}
 
 	private boolean isNotAlreadyOccupied(int xCoordinate, int yCoordinate) {
-		return pieces[xCoordinate][yCoordinate] == null;
+		return !isInTheBoard(pieces[xCoordinate][yCoordinate]);
+	}
+
+	private boolean isInTheBoard(Pawn pawn) {
+		return pawn != null;
 	}
 
 	private boolean piecesLimitNotReached() {
@@ -43,7 +47,7 @@ public class ChessBoard {
 		return new Predicate<Pawn>() {
 			@Override
 			public boolean test(Pawn t) {
-				return t != null;
+				return isInTheBoard(t);
 			}
 		};
 	}
