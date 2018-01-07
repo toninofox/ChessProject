@@ -9,6 +9,7 @@ import com.solarwindsmsp.chess.PieceColor;
 public abstract class ChessPiece {
 
 	
+	public static final int INVALID_COORDINATE = -1;
 	private ChessBoard chessBoard;
 	private int xCoordinate;
 	private int yCoordinate;
@@ -62,6 +63,11 @@ public abstract class ChessPiece {
 			}
 		}
 	}
+	
+	public boolean isAddedOnTheBoard() {
+		return getXCoordinate() != INVALID_COORDINATE && getXCoordinate() != -1;
+	}
+
 
 	public abstract boolean IsLegalMove(int newX, int newY);
 

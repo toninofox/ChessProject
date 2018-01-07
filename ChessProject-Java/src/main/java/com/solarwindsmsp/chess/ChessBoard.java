@@ -10,7 +10,7 @@ import com.solarwindsmsp.chess.pieces.ChessPiece;
 
 public class ChessBoard {
 
-	private static final int INVALID_COORDINATE = -1;
+	
 	public static int MAX_BOARD_LENGTH = 8;
 	public static int MAX_BOARD_HEIGHT_INDEX = MAX_BOARD_LENGTH-1;
 	public static int MAX_BOARD_WIDTH_INDEX = MAX_BOARD_LENGTH-1;
@@ -30,8 +30,8 @@ public class ChessBoard {
 			pieces[xCoordinate][yCoordinate] = piece;
 		} else {
 			System.err.println("Invalid Coordinate "+xCoordinate+":"+yCoordinate+" for "+piece);
-			piece.setXCoordinate(INVALID_COORDINATE);
-			piece.setYCoordinate(INVALID_COORDINATE);
+			piece.setXCoordinate(ChessPiece.INVALID_COORDINATE);
+			piece.setYCoordinate(ChessPiece.INVALID_COORDINATE);
 		}
 	}
 
@@ -50,11 +50,15 @@ public class ChessBoard {
 	}
 	
 	private boolean isNotAlreadyOccupied(int xCoordinate, int yCoordinate) {
-		boolean isAlreadyInTheBoard = isInTheBoard(pieces[xCoordinate][yCoordinate]);
+		boolean isAlreadyInTheBoard = isInTheBoard(getPieceOn(xCoordinate, yCoordinate));
 		if(isAlreadyInTheBoard) {
-			System.err.println("Position already occupied by "+pieces[xCoordinate][yCoordinate]);
+			System.err.println("Position already occupied by "+getPieceOn(xCoordinate, yCoordinate));
 		}
 		return !isAlreadyInTheBoard;
+	}
+
+	public ChessPiece getPieceOn(int xCoordinate, int yCoordinate) {
+		return pieces[xCoordinate][yCoordinate];
 	}
 
 	private boolean isInTheBoard(ChessPiece pawn) {
