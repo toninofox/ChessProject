@@ -1,33 +1,33 @@
 package com.solarwindsmsp.chess;
 
 import java.util.Arrays;
-import java.util.OptionalLong;
+import java.util.OptionalInt;
 import java.util.function.Predicate;
-import java.util.stream.LongStream;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class ChessBoard {
 
 	private static final int INVALID_COORDINATE = -1;
-	public static int MAX_BOARD_WIDTH = 7;
-	public static int MAX_BOARD_HEIGHT = 7;
+	public static int MAX_BOARD_WIDTH_INDEX = 7;
+	public static int MAX_BOARD_HEIGHT_INDEX = 7;
 
-	private Pawn[][] pieces;
+	ChessPiece[][] pieces;
 
 	public ChessBoard() {
-		pieces = new Pawn[MAX_BOARD_WIDTH][MAX_BOARD_HEIGHT];
+		pieces = new ChessPiece[MAX_BOARD_WIDTH_INDEX + 1][MAX_BOARD_HEIGHT_INDEX + 1];
 
 	}
 
-	public void Add(Pawn pawn, int xCoordinate, int yCoordinate, PieceColor pieceColor) {
-		if (piecesLimitNotReached() && IsLegalMove(xCoordinate, yCoordinate)) {
-			pawn.setChessBoard(this);
-			pawn.setXCoordinate(xCoordinate);
-			pawn.setYCoordinate(yCoordinate);
-			pieces[xCoordinate][yCoordinate] = pawn;
+	public void Add(ChessPiece piece, int xCoordinate, int yCoordinate, PieceColor pieceColor) {
+		if (piecesLimitNotReached(piece) && IsLegalMove(xCoordinate, yCoordinate)) {
+			piece.setChessBoard(this);
+			piece.setXCoordinate(xCoordinate);
+			piece.setYCoordinate(yCoordinate);
+			pieces[xCoordinate][yCoordinate] = piece;
 		} else {
-			pawn.setXCoordinate(INVALID_COORDINATE);
-			pawn.setYCoordinate(INVALID_COORDINATE);
+			piece.setXCoordinate(INVALID_COORDINATE);
+			piece.setYCoordinate(INVALID_COORDINATE);
 		}
 	}
 
@@ -36,8 +36,8 @@ public class ChessBoard {
 	}
 
 	public boolean IsLegalBoardPosition(int xCoordinate, int yCoordinate) {
-		OptionalLong checkXCoordinate = LongStream.range(0, MAX_BOARD_WIDTH).filter(p -> p == xCoordinate).findAny();
-		OptionalLong checkYCoordinate = LongStream.range(0, MAX_BOARD_HEIGHT).filter(p -> p == yCoordinate).findAny();
+		OptionalInt checkXCoordinate = IntStream.rangeClosed(0, MAX_BOARD_WIDTH_INDEX).filter(p -> p == xCoordinate).findAny();
+		OptionalInt checkYCoordinate = IntStream.rangeClosed(0, MAX_BOARD_HEIGHT_INDEX).filter(p -> p == yCoordinate).findAny();
 		return checkXCoordinate.isPresent() && checkYCoordinate.isPresent();
 	}
 	
@@ -45,19 +45,19 @@ public class ChessBoard {
 		return !isInTheBoard(pieces[xCoordinate][yCoordinate]);
 	}
 
-	private boolean isInTheBoard(Pawn pawn) {
+	private boolean isInTheBoard(ChessPiece pawn) {
 		return pawn != null;
 	}
 
-	private boolean piecesLimitNotReached() {
-		return Arrays.stream(pieces).flatMap(Stream::of).filter(whereContainsPiece()).count() <= Pawn.MAX_N_OF_PICES;
+	private boolean piecesLimitNotReached(ChessPiece piece) {
+		return Arrays.stream(pieces).flatMap(Stream::of).filter(whereContainsPiece()).count() <= piece.getMaxNumberOfPiecesAllowed();
 	}
 
 	
-	private Predicate<? super Pawn> whereContainsPiece() {
-		return new Predicate<Pawn>() {
+	private Predicate<? super ChessPiece> whereContainsPiece() {
+		return new Predicate<ChessPiece>() {
 			@Override
-			public boolean test(Pawn t) {
+			public boolean test(ChessPiece t) {
 				return isInTheBoard(t);
 			}
 		};
