@@ -1,12 +1,15 @@
 package com.solarwindsmsp.chess;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 
-public class ChessBoardTest extends TestCase {
+public class ChessBoardTest {
 
     private ChessBoard testSubject;
 
