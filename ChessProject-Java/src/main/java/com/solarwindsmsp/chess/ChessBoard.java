@@ -28,6 +28,7 @@ public class ChessBoard {
 			piece.setXCoordinate(xCoordinate);
 			piece.setYCoordinate(yCoordinate);
 			pieces[xCoordinate][yCoordinate] = piece;
+			System.out.println("Added Piece "+piece);
 		} else {
 			System.err.println("Invalid Coordinate "+xCoordinate+":"+yCoordinate+" for "+piece);
 			piece.setXCoordinate(ChessPiece.INVALID_COORDINATE);
