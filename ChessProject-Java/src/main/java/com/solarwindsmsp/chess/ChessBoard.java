@@ -8,7 +8,6 @@ import java.util.stream.Stream;
 
 public class ChessBoard {
 
-	private static final long MAX_N_OF_PAWNS = 8;
 	private static final int INVALID_COORDINATE = -1;
 	public static int MAX_BOARD_WIDTH = 7;
 	public static int MAX_BOARD_HEIGHT = 7;
@@ -51,7 +50,7 @@ public class ChessBoard {
 	}
 
 	private boolean piecesLimitNotReached() {
-		return Arrays.stream(pieces).flatMap(Stream::of).filter(whereContainsPiece()).count() <= MAX_N_OF_PAWNS;
+		return Arrays.stream(pieces).flatMap(Stream::of).filter(whereContainsPiece()).count() <= Pawn.MAX_N_OF_PICES;
 	}
 
 	

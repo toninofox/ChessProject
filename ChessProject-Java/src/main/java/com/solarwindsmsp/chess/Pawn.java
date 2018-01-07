@@ -2,6 +2,7 @@ package com.solarwindsmsp.chess;
 
 public class Pawn {
 
+	public static final int MAX_N_OF_PICES = 8;
 	private ChessBoard chessBoard;
 	private int xCoordinate;
 	private int yCoordinate;
