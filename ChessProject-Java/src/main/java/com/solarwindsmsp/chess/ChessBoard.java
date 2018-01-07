@@ -21,7 +21,7 @@ public class ChessBoard {
 
     public boolean IsLegalBoardPosition(int xCoordinate, int yCoordinate) {
     	OptionalLong checkXCoordinate = LongStream.range(0, MAX_BOARD_WIDTH).filter(p -> p == xCoordinate).findAny();
-    	OptionalLong checkYCoordinate = LongStream.range(0, MAX_BOARD_WIDTH).filter(p -> p == yCoordinate).findAny();
+    	OptionalLong checkYCoordinate = LongStream.range(0, MAX_BOARD_HEIGHT).filter(p -> p == yCoordinate).findAny();
     	return checkXCoordinate.isPresent() && checkYCoordinate.isPresent();
     }
 }
