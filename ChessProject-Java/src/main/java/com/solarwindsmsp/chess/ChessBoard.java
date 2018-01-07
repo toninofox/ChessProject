@@ -9,23 +9,25 @@ import java.util.stream.Stream;
 public class ChessBoard {
 
 	private static final int INVALID_COORDINATE = -1;
-	public static int MAX_BOARD_WIDTH_INDEX = 7;
-	public static int MAX_BOARD_HEIGHT_INDEX = 7;
+	public static int MAX_BOARD_LENGTH = 8;
+	public static int MAX_BOARD_HEIGHT_INDEX = MAX_BOARD_LENGTH-1;
+	public static int MAX_BOARD_WIDTH_INDEX = MAX_BOARD_LENGTH-1;
 
 	ChessPiece[][] pieces;
 
 	public ChessBoard() {
-		pieces = new ChessPiece[MAX_BOARD_WIDTH_INDEX + 1][MAX_BOARD_HEIGHT_INDEX + 1];
+		pieces = new ChessPiece[MAX_BOARD_LENGTH][MAX_BOARD_LENGTH];
 
 	}
 
-	public void Add(ChessPiece piece, int xCoordinate, int yCoordinate, PieceColor pieceColor) {
+	public void Add(ChessPiece piece, int xCoordinate, int yCoordinate) {
 		if (piecesLimitNotReached(piece) && IsLegalMove(xCoordinate, yCoordinate)) {
 			piece.setChessBoard(this);
 			piece.setXCoordinate(xCoordinate);
 			piece.setYCoordinate(yCoordinate);
 			pieces[xCoordinate][yCoordinate] = piece;
 		} else {
+			System.err.println("Invalid Coordinate "+xCoordinate+":"+yCoordinate+" for piece "+piece);
 			piece.setXCoordinate(INVALID_COORDINATE);
 			piece.setYCoordinate(INVALID_COORDINATE);
 		}
@@ -42,7 +44,11 @@ public class ChessBoard {
 	}
 	
 	private boolean isNotAlreadyOccupied(int xCoordinate, int yCoordinate) {
-		return !isInTheBoard(pieces[xCoordinate][yCoordinate]);
+		boolean isAlreadyInTheBoard = isInTheBoard(pieces[xCoordinate][yCoordinate]);
+		if(isAlreadyInTheBoard) {
+			System.err.println("Position already occupied by "+pieces[xCoordinate][yCoordinate]);
+		}
+		return !isAlreadyInTheBoard;
 	}
 
 	private boolean isInTheBoard(ChessPiece pawn) {
@@ -50,15 +56,19 @@ public class ChessBoard {
 	}
 
 	private boolean piecesLimitNotReached(ChessPiece piece) {
-		return Arrays.stream(pieces).flatMap(Stream::of).filter(whereContainsPiece()).count() <= piece.getMaxNumberOfPiecesAllowed();
+		boolean limitNotReached = Arrays.stream(pieces).flatMap(Stream::of).filter(whereContainsPieceOfColor(piece.getPieceColor())).count() <= piece.getMaxNumberOfPiecesAllowed();
+		if(!limitNotReached) {
+			System.err.println("Max Pieces reached for "+piece);
+		}
+		return limitNotReached;
 	}
 
 	
-	private Predicate<? super ChessPiece> whereContainsPiece() {
+	private Predicate<? super ChessPiece> whereContainsPieceOfColor(PieceColor pieceColor) {
 		return new Predicate<ChessPiece>() {
 			@Override
 			public boolean test(ChessPiece t) {
-				return isInTheBoard(t);
+				return isInTheBoard(t) && t.getPieceColor().equals(pieceColor);
 			}
 		};
 	}

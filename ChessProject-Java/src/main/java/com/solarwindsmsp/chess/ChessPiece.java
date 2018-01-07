@@ -1,5 +1,7 @@
 package com.solarwindsmsp.chess;
 
+import java.text.MessageFormat;
+
 public abstract class ChessPiece {
 
 	
@@ -67,8 +69,8 @@ public abstract class ChessPiece {
 
 	protected String CurrentPositionAsString() {
 		String eol = System.lineSeparator();
-		return String.format("Current X: {1}{0}Current Y: {2}{0}Piece Color: {3}", eol, xCoordinate, yCoordinate,
-				pieceColor);
+		return MessageFormat.format("Piece: {4} ({3}) - X: {1} Y: {2}", eol, xCoordinate, yCoordinate,
+				pieceColor, getClass().getSimpleName());
 	}
 
 
