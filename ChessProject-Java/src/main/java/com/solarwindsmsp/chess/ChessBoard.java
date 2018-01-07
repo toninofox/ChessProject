@@ -1,5 +1,8 @@
 package com.solarwindsmsp.chess;
 
+import java.util.OptionalLong;
+import java.util.stream.LongStream;
+
 public class ChessBoard {
 
     public static int MAX_BOARD_WIDTH = 7;
@@ -17,6 +20,8 @@ public class ChessBoard {
     }
 
     public boolean IsLegalBoardPosition(int xCoordinate, int yCoordinate) {
-        throw new UnsupportedOperationException("Need to implement ChessBoard.IsLegalBoardPosition()");
+    	OptionalLong checkXCoordinate = LongStream.range(0, MAX_BOARD_WIDTH).filter(p -> p == xCoordinate).findAny();
+    	OptionalLong checkYCoordinate = LongStream.range(0, MAX_BOARD_WIDTH).filter(p -> p == yCoordinate).findAny();
+    	return checkXCoordinate.isPresent() && checkYCoordinate.isPresent();
     }
 }
