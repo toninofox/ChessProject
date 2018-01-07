@@ -1,7 +1,12 @@
-package com.solarwindsmsp.chess;
+package com.solarwindsmsp.chess.pieces;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import com.solarwindsmsp.chess.ChessBoard;
+import com.solarwindsmsp.chess.MovementType;
+import com.solarwindsmsp.chess.PieceColor;
+import com.solarwindsmsp.chess.pieces.Pawn;
 
 import static org.junit.Assert.*;
 
@@ -58,6 +63,12 @@ public class PawnTest {
     @Test
 	public void theMaxAllowedPawnsAre8() throws Exception {
 		assertThat(testSubject.getMaxNumberOfPiecesAllowed(),is(8));
+	}
+    
+    @Test(expected=UnsupportedOperationException.class)
+	public void movementCaptureIsNotAllowed() throws Exception {
+        testSubject.Move(MovementType.CAPTURE, 6, 2);
+
 	}
 
 }

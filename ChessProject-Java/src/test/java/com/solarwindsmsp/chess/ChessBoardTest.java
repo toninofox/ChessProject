@@ -7,6 +7,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.solarwindsmsp.chess.pieces.Pawn;
+
 public class ChessBoardTest {
 
 	private ChessBoard testSubject;

@@ -6,6 +6,8 @@ import java.util.function.Predicate;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import com.solarwindsmsp.chess.pieces.ChessPiece;
+
 public class ChessBoard {
 
 	private static final int INVALID_COORDINATE = -1;
@@ -27,7 +29,7 @@ public class ChessBoard {
 			piece.setYCoordinate(yCoordinate);
 			pieces[xCoordinate][yCoordinate] = piece;
 		} else {
-			System.err.println("Invalid Coordinate "+xCoordinate+":"+yCoordinate+" for piece "+piece);
+			System.err.println("Invalid Coordinate "+xCoordinate+":"+yCoordinate+" for "+piece);
 			piece.setXCoordinate(INVALID_COORDINATE);
 			piece.setYCoordinate(INVALID_COORDINATE);
 		}
@@ -40,7 +42,11 @@ public class ChessBoard {
 	public boolean IsLegalBoardPosition(int xCoordinate, int yCoordinate) {
 		OptionalInt checkXCoordinate = IntStream.rangeClosed(0, MAX_BOARD_WIDTH_INDEX).filter(p -> p == xCoordinate).findAny();
 		OptionalInt checkYCoordinate = IntStream.rangeClosed(0, MAX_BOARD_HEIGHT_INDEX).filter(p -> p == yCoordinate).findAny();
-		return checkXCoordinate.isPresent() && checkYCoordinate.isPresent();
+		boolean insideTheBoard = checkXCoordinate.isPresent() && checkYCoordinate.isPresent();
+		if(!insideTheBoard) {
+			System.err.println(xCoordinate+":"+yCoordinate+" are not valid coordinates");
+		}
+		return insideTheBoard;
 	}
 	
 	private boolean isNotAlreadyOccupied(int xCoordinate, int yCoordinate) {

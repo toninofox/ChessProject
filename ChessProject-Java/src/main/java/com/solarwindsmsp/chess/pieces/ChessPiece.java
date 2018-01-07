@@ -1,6 +1,10 @@
-package com.solarwindsmsp.chess;
+package com.solarwindsmsp.chess.pieces;
 
 import java.text.MessageFormat;
+
+import com.solarwindsmsp.chess.ChessBoard;
+import com.solarwindsmsp.chess.MovementType;
+import com.solarwindsmsp.chess.PieceColor;
 
 public abstract class ChessPiece {
 

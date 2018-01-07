@@ -1,4 +1,6 @@
-package com.solarwindsmsp.chess;
+package com.solarwindsmsp.chess.pieces;
+
+import com.solarwindsmsp.chess.PieceColor;
 
 public class Pawn extends ChessPiece{
 
